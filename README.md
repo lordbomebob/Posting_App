@@ -8,6 +8,6 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 ## Third-party Component
-https://v2.chakra-ui.com/getting-started
-https://react-bootstrap.netlify.app/docs/getting-started/introduction
-https://mui.com/material-ui/getting-started/installation/
+- https://v2.chakra-ui.com/getting-started
+- https://react-bootstrap.netlify.app/docs/getting-started/introduction
+- https://mui.com/material-ui/getting-started/installation/
