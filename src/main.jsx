@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import "./index.css";
 import { mode } from "@chakra-ui/theme-tools";
 import { ColorModeScript } from "@chakra-ui/react";
+import { BrowserRouter } from "react-router-dom";
 
 const styles = {
   global: (props) => ({
@@ -26,7 +27,7 @@ const colors = {
     dark: "#1e1e1e",
   },
 };
-
+// Added a theme which will wrap our entire app
 const theme = extendTheme({ config, styles, colors });
 
 ReactDOM.createRoot(document.getElementById("root")).render(
