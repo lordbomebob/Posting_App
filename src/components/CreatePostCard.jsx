@@ -1,4 +1,17 @@
-import { Flex, Heading, Stack } from "@chakra-ui/react";
+import { Flex,
+    Box,
+    FormControl,
+    FormLabel,
+    Input,
+    InputGroup,
+    HStack,
+    InputRightElement,
+    Stack,
+    Button,
+    Heading,
+    Text,
+    useColorModeValue,
+    Link,} from "@chakra-ui/react";
 const CreatePostCard = () =>{
     
     
@@ -9,15 +22,28 @@ const CreatePostCard = () =>{
                     Create Post
                 </Heading>
             </Stack>
-            <Box
-                rounded={"lg"}
-                bg={useColorModeValue("white", "gray.dark")}
-                boxShadow={"lg"}
-                p={8}
-                w={{ base: "full", sm: "400px" }}
-            >
-                
-            </Box>
+            <Stack>
+                <Box
+                    rounded={"lg"}
+                    bg={useColorModeValue("white", "gray.dark")}
+                    boxShadow={"lg"}
+                    p={8}
+                    w={{ base: "full", sm: "400px" }}
+                >
+                    <Stack>
+                        <FormControl isRequired>
+                            <FormLabel>Post Title</FormLabel>
+                            <Input type="text" />
+                        </FormControl>
+                        <FormControl isRequired>
+                            <FormLabel>Content</FormLabel>
+                            <Input type="text" />
+                        </FormControl>
+                    </Stack>
+                </Box>
+            </Stack>
+            
+
         </Flex> 
     )
 }

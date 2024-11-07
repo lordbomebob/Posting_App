@@ -4,6 +4,7 @@ import UserPage from "./pages/UserPage";
 import PostPage from "./pages/PostPage";
 import Header from "./components/Header";
 import AuthPage from "./pages/AuthPage";
+import CreatePostCard from "./components/CreatePostCard";
 
 // Container from chakra-ui wraps our app content in the center
 //Routes for declaring url routes to postpage and profile page
@@ -11,6 +12,7 @@ function App() {
   return (
     <Container maxW="620px">
       <Header />
+      <CreatePostCard></CreatePostCard> 
       <Routes>
         <Route path="/" element={<AuthPage />} />
         <Route path="/:username" element={<UserPage />} />
