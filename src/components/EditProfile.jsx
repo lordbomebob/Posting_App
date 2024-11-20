@@ -1,16 +1,21 @@
+import { Box, Button, Flex, FormControl, FormLabel, Heading, Image, Input, Stack, useColorModeValue } from '@chakra-ui/react'
 import React, { useState } from 'react'
-
-export const EditProfile = () => {
+const EditProfile = () => {
     const [userProfileData,setUserProfileData]= useState({
         publicName:'',
         description:'',
         profileImage:''
     })
+
+    //handle updating profile
+    const handleSubmit=()=>{
+
+    }
   return (
     <Flex align={"center"} justify={"center"} display={"flex"} flexDirection={"column"}>
             <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
                 <Heading fontSize={"4xl"} textAlign={"center"}>
-                    Create Post
+                    Edit Profile
                 </Heading>
             </Stack>
             <Box
@@ -23,37 +28,38 @@ export const EditProfile = () => {
                 <Stack >
                     <FormControl isRequired>
                         <FormLabel>Public Name</FormLabel>
-                        <Input placeholder='Public Username' value={postData.title} onChange={(e)=>setPostData({...postData,title:e.target.value})}></Input>
+                        <Input placeholder='Public Username' value={userProfileData.publicName} onChange={(e)=>setUserProfileData({...userProfileData,publicName:e.target.value})}></Input>
                     </FormControl>
                     <FormControl>
-                        <FormLabel>Content</FormLabel>
-                        <Textarea placeholder="Content" value={postData.content} onChange={(e)=>setPostData({...postData,content:e.target.value})}></Textarea>
-                        
+                        <FormLabel>Profile Image</FormLabel>
+                        <Input placeholder='Image Link' value={userProfileData.profileImage} onChange={(e)=>setUserProfileData({...userProfileData,profileImage:e.target.value})}></Input>
+                        <Image
+                            justifySelf={'center'}
+                            src={userProfileData.profileImage}
+                            boxSize="150px"
+                            borderRadius="full"
+                            
+                            fit="cover"
+                            alt={userProfileData.profileImage || 'missing Image'}
+                        />
                     </FormControl>
                     <FormControl>
-                        <FormLabel>Images Link</FormLabel>
-                        <Input value={inputImageLink} onChange={handleImageInput} marginBottom={3}></Input>
+                        <FormLabel>Description</FormLabel>
+                        <Input placeholder='Profile Description' value={userProfileData.description} onChange={(e)=>setUserProfileData({...userProfileData,description:e.target.value})}></Input>
+                    </FormControl>
+                    
 
-                        <Stack display={"flex"} flexDirection={"row"}>
-                            <Button color={'green'} onClick={()=> addImageLink(inputImageLink)}>Add Image Link</Button>
-                            <Button color={'red'} onClick={()=> clear()}>Clear Link</Button>
-                        </Stack>
-                    </FormControl>
-                    <Heading size={'lg'}>Images Added</Heading>
-                    <Heading size={'sm'}>Click Image to Delete</Heading>
-                    <ImageList sx={{
-                                    width: '100%',
-                                    maxHeight: 300,         // Set the height limit for scrolling
-                                    overflowY: 'auto',      // Enable vertical scrolling
-                                    padding: 2,
-                                    border: '1px solid #ddd',
-                                    borderRadius: 2,
-                                    }}>
-                            {showImage()}
-                    </ImageList>
-                    <Button onClick={()=>handleSubmit()}>Post</Button>
+                    <Button onClick={()=>handleSubmit()}
+                        loadingText="Submitting"
+                        size="lg"
+                        bg={useColorModeValue("gray.600", "gray.700")}
+                        color={"white"}
+                        _hover={{
+                        bg: useColorModeValue("gray.700", "gray.800"),
+                        }}>Update</Button>
                 </Stack>
             </Box>
         </Flex> 
   )
 }
+export default EditProfile
