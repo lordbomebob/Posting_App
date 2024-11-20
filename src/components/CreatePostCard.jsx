@@ -1,6 +1,6 @@
-import { Flex, Heading, Stack, Box, useColorModeValue, FormControl, FormLabel, Input, Text, Textarea, Button} from "@chakra-ui/react";
+import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Stack, Textarea, useColorModeValue } from "@chakra-ui/react";
 import { ImageList, ImageListItem } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 const CreatePostCard = () =>{
     const [inputImageLink, setInputImageLink]= useState('')
     function handleImageInput(e){
@@ -95,7 +95,14 @@ const CreatePostCard = () =>{
                                     }}>
                             {showImage()}
                     </ImageList>
-                    <Button onClick={()=>handleSubmit()}>Post</Button>
+                    <Button onClick={()=>handleSubmit()}
+                        loadingText="Submitting"
+                        size="lg"
+                        bg={useColorModeValue("gray.600", "gray.700")}
+                        color={"white"}
+                        _hover={{
+                        bg: useColorModeValue("gray.700", "gray.800"),
+                        }}>Post</Button>
                 </Stack>
             </Box>
         </Flex> 
