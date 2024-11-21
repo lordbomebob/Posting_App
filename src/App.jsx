@@ -4,7 +4,6 @@ import Header from "./components/Header";
 import AuthPage from "./pages/AuthPage";
 import PostPage from "./pages/PostPage";
 import UserPage from "./pages/UserPage";
-import CreatePostCard from "./components/CreatePostCard";
 
 // Container from chakra-ui wraps our app content in the center
 //Routes for declaring url routes to postpage and profile page
