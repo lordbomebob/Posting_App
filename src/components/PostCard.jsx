@@ -11,14 +11,14 @@ import {
 } from "@chakra-ui/react";
 import { FaCommentAlt, FaArrowUp, FaArrowDown, FaShare } from "react-icons/fa";
 
-const PostCard = () => {
-  //setPost is used to make dynamic changes to the default values
+const PostCard = ({ initialPost }) => {
+  // State to manage post data
   const [post, setPost] = useState({
-    title: "",
-    content: "",
-    author: "",
-    upvotes: 0,
-    comments: 0,
+    title: initialPost?.title || "",
+    content: initialPost?.content || "",
+    author: initialPost?.author || "",
+    upvotes: initialPost?.upvotes || 0,
+    comments: initialPost?.comments || 0,
   });
 
   return (
