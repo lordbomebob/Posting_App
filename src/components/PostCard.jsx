@@ -1,18 +1,25 @@
 // src/components/PostCard.jsx
+import React, { useState } from "react";
 import {
   Box,
   Flex,
   Heading,
   Text,
-  Stack,
   Button,
   IconButton,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { FaCommentAlt, FaArrowUp, FaArrowDown, FaShare } from "react-icons/fa";
 
-// PostCard component to display each post
-const PostCard = ({ title, content, author, upvotes, comments }) => {
+const PostCard = () => {
+  const [post, setPost] = useState({
+    title: "",
+    content: "",
+    author: "",
+    upvotes: 0,
+    comments: 0,
+  });
+
   return (
     <Box
       p={4}
@@ -23,13 +30,13 @@ const PostCard = ({ title, content, author, upvotes, comments }) => {
       mb={4}
     >
       <Flex justify="space-between">
-        <Heading fontSize="xl">{title}</Heading>
+        <Heading fontSize="xl">{post.title}</Heading>
         <Text fontSize="sm" color="gray.500">
-          By {author}
+          By {post.author}
         </Text>
       </Flex>
       <Text mt={2} color={useColorModeValue("gray.800", "whiteAlpha.900")}>
-        {content}
+        {post.content}
       </Text>
       <Flex mt={4} align="center">
         <IconButton
@@ -39,7 +46,7 @@ const PostCard = ({ title, content, author, upvotes, comments }) => {
           colorScheme="teal"
           mr={2}
         />
-        <Text>{upvotes}</Text>
+        <Text>{post.upvotes}</Text>
         <IconButton
           icon={<FaArrowDown />}
           aria-label="Downvote"
@@ -53,7 +60,7 @@ const PostCard = ({ title, content, author, upvotes, comments }) => {
           colorScheme="blue"
           ml={4}
         >
-          {comments} Comments
+          {post.comments} Comments
         </Button>
         <IconButton
           icon={<FaShare />}

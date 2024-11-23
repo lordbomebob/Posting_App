@@ -56,7 +56,7 @@ const Search = () => {
       flexDirection="column"
       justifyContent="space-around"
       border="1px solid"
-      borderColor="gray.400" // Match text color for 'No results found'
+      borderColor="gray.400"
     >
       {/* Search Header */}
       <Box>
@@ -134,7 +134,7 @@ const Search = () => {
           )
         ) : (
           <Text textAlign="center" color="gray.400">
-            No results found. Try a different query.
+            No results found.
           </Text>
         )}
       </VStack>
