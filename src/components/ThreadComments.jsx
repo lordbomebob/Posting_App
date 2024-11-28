@@ -8,6 +8,19 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
+import PropTypes from "prop-types";
+
+ThreadComments.propTypes = {
+  author: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  replies: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
+
 // A single comment with nested replies
 const Comment = ({ author, content, replies }) => {
   return (
