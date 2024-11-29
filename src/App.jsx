@@ -1,9 +1,14 @@
 // src/App.jsx
 import { Flex } from "@chakra-ui/react";
 import { Route, Routes } from "react-router-dom";
+import EditProfile from './components/EditProfile';
 import Header from "./components/Header";
 import AuthPage from "./pages/AuthPage";
 import PostPage from "./pages/PostPage";
+import SearchPage from './pages/SearchPage';
+import Settings from './pages/Settings';
+import Privacy from './pages/Settings/Privacy';
+import Security from './pages/Settings/Security';
 
 // Container from chakra-ui wraps our app content in the center
 //Routes for declaring url routes to postpage and profile page
@@ -12,7 +17,6 @@ function App() {
     <Flex
       direction="column"
       minHeight="100vh" // Ensures the app takes the full height of the viewport
-      bg="black" // Sets the background color for the whole app
     >
       {/* Header Component */}
       <Header />
@@ -22,7 +26,6 @@ function App() {
         flex="1"
         justifyContent="center"
         alignItems="flex-start"
-        bg="black"
         width="100%"
       >
         <Routes>
