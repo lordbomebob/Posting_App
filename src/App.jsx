@@ -2,15 +2,11 @@
 import { Flex } from "@chakra-ui/react";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
-import PostPage from "./pages/PostPage";
 import AuthPage from "./pages/AuthPage";
-import SearchPage from "./pages/Search";
-import Settings from "./pages/Settings";
-import Security from "./pages/Settings/Security";
-import EditProfile from "./pages/Settings/EditProfile";
-import Privacy from "./pages/Settings/Privacy";
+import PostPage from "./pages/PostPage";
 
-// Main App component
+// Container from chakra-ui wraps our app content in the center
+//Routes for declaring url routes to postpage and profile page
 function App() {
   return (
     <Flex
