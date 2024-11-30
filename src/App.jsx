@@ -5,13 +5,12 @@ import EditProfile from './components/EditProfile';
 import Header from "./components/Header";
 import AuthPage from "./pages/AuthPage";
 import PostPage from "./pages/PostPage";
-import SearchPage from './pages/SearchPage';
-import Settings from './pages/Settings';
-import Privacy from './pages/Settings/Privacy';
-import Security from './pages/Settings/Security';
+import SearchPage from "./pages/Search";
+import Settings from "./pages/Settings";
+import Privacy from "./pages/Settings/Privacy";
+import Security from "./pages/Settings/Security";
 
-// Container from chakra-ui wraps our app content in the center
-//Routes for declaring url routes to postpage and profile page
+// Main App component
 function App() {
   return (
     <Flex
