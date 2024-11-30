@@ -7,7 +7,7 @@ import "./index.css"; // Custom CSS for styling
 import { mode } from "@chakra-ui/theme-tools";
 import { ColorModeScript } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
-import { RecoilRoot } from "recoil";
+
 
 // Theme configuration for Chakra UI
 const styles = {
@@ -37,14 +37,14 @@ const theme = extendTheme({ config, styles, colors });
 // Render the React app
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RecoilRoot>
+  
       <BrowserRouter>
         <ChakraProvider theme={theme}>
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />
           <App /> {/* Main App component */}
         </ChakraProvider>
       </BrowserRouter>
-    </RecoilRoot>
+
   </StrictMode>
 );
 
@@ -56,7 +56,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // import { mode } from "@chakra-ui/theme-tools";
 // import { ColorModeScript } from "@chakra-ui/react";
 // import { BrowserRouter } from "react-router-dom";
-// import { RecoilRoot } from "recoil";
+
 
 // const styles = {
 //   global: (props) => ({
@@ -83,7 +83,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
 // ReactDOM.createRoot(document.getElementById("root")).render(
 //   <StrictMode>
-//     <RecoilRoot>
+//     
 //       <BrowserRouter>
 //         <ChakraProvider theme={theme}>
 //           <ColorModeScript initialColorMode={theme.config.initialColorMode} />
@@ -91,6 +91,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 //           <App />
 //         </ChakraProvider>
 //       </BrowserRouter>
-//     </RecoilRoot>
+//     
 //   </StrictMode>
 // );
