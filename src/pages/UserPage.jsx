@@ -1,6 +1,6 @@
 //Profile Page for every user
 const UserPage = () => {
-  return <div></div>;
+  return <div>use page</div>;
 };
 
 export default UserPage;
