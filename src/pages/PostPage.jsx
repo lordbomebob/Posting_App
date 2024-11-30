@@ -1,15 +1,16 @@
 // src/pages/Search.jsx
 import {
   Box,
+  Button,
+  Divider,
+  Heading,
+  HStack,
   Input,
   InputGroup,
   InputRightElement,
-  Button,
-  VStack,
-  Heading,
   Text,
-  HStack,
-  Divider,
+  useColorModeValue,
+  VStack
 } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -46,7 +47,7 @@ const Search = () => {
   return (
     <Box
       p={6}
-      bg="gray.800"
+      bg={useColorModeValue("white","gray.dark" )}
       color="white"
       borderRadius="md"
       maxWidth="1200px"
@@ -60,7 +61,7 @@ const Search = () => {
     >
       {/* Search Header */}
       <Box>
-        <Heading size="lg" mb={6} textAlign="center">
+        <Heading size="lg" mb={6} textAlign="center" color={useColorModeValue("gray.dark","white")}>
           Search
         </Heading>
 
@@ -71,7 +72,7 @@ const Search = () => {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             bg="white"
-            color="black"
+            color={useColorModeValue("white","gray.dark" )}
             size="lg" // Increased size for emphasis
           />
           <InputRightElement width="6rem">

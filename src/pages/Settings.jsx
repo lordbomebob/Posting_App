@@ -1,5 +1,5 @@
 // src/pages/Settings.jsx
-import { Box, Button, VStack, Heading } from "@chakra-ui/react";
+import { Box, Button, Heading, useColorModeValue, VStack } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
@@ -8,13 +8,13 @@ const Settings = () => {
   return (
     <Box
       p={6}
-      bg="gray.800"
+      bg={useColorModeValue("gray.dark","white" )}
       color="white"
       borderRadius="md"
       maxWidth="600px"
       mx="auto"
     >
-      <Heading size="lg" mb={6} textAlign="center">
+      <Heading size="lg" mb={6} textAlign="center" color={useColorModeValue("white","gray.dark" )}>
         Settings
       </Heading>
       <VStack spacing={4}>

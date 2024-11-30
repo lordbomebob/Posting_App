@@ -1,6 +1,4 @@
-import { Flex, Heading, Stack } from "@chakra-ui/react";
-import { Box } from "@chakra-ui/react";
-import { useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, Heading, Stack, useColorModeValue } from "@chakra-ui/react";
 
 const CreatePostCard = () => {
   return (
