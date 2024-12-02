@@ -1,0 +1,26 @@
+{
+    "user":"userid/username",
+    "timestamp":"12:00",
+    "content":{
+        "title":"title",
+        "content":"lorem",
+        "images":["link1", "link2"]
+    },
+    "comments":[
+        {
+            "user":{
+                "username":"username1",
+                "profilePic":"link to profile image1"
+            },
+            "comment":"lorem1"
+        },
+        {
+            "user":{
+                "username":"username2",
+                "profilePic":"link to profile image2"
+            },
+            "comment":"lorem2"
+        }
+    ],
+    "likes":0
+}
