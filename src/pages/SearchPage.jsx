@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Box,
   Input,
@@ -11,36 +12,53 @@ import {
   Divider,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../firebaseConfig"; // Firebase Firestore configuration
 
 const Search = () => {
-  const [query, setQuery] = useState("");
+  const [queryText, setQueryText] = useState("");
   const [results, setResults] = useState([]);
 
-  // Mock data for demonstration
-  const mockData = [
-    { id: 1, type: "user", name: "Ian Bajwa", username: "ian.bajwa" },
-    { id: 2, type: "post", title: "Welcome to our App!", author: "Admin" },
-    { id: 3, type: "user", name: "John Doe", username: "john.doe" },
-    { id: 4, type: "post", title: "Breaking News!", author: "NewsAdmin" },
-  ];
-
-  const suggestions = [
-    { id: 1, text: "Trending Posts" },
-    { id: 2, text: "Popular Users" },
-    { id: 3, text: "Latest Updates" },
-    { id: 4, text: "Search by Hashtag" },
-  ];
-
   // Handle search query submission
-  const handleSearch = () => {
-    const filteredResults = mockData.filter((item) =>
-      item.type === "user"
-        ? item.name.toLowerCase().includes(query.toLowerCase()) ||
-          item.username.toLowerCase().includes(query.toLowerCase())
-        : item.title.toLowerCase().includes(query.toLowerCase())
+  const handleSearch = async () => {
+    if (!queryText.trim()) {
+      setResults([]);
+      return;
+    }
+
+    // Firestore queries for users and posts
+    const usersQuery = query(
+      collection(db, "users"),
+      where("name", ">=", queryText),
+      where("name", "<=", queryText + "\uf8ff")
     );
-    setResults(filteredResults);
+    const postsQuery = query(
+      collection(db, "posts"),
+      where("title", ">=", queryText),
+      where("title", "<=", queryText + "\uf8ff")
+    );
+
+    try {
+      const [usersSnapshot, postsSnapshot] = await Promise.all([
+        getDocs(usersQuery),
+        getDocs(postsQuery),
+      ]);
+
+      const userResults = usersSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        type: "user",
+        ...doc.data(),
+      }));
+      const postResults = postsSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        type: "post",
+        ...doc.data(),
+      }));
+
+      setResults([...userResults, ...postResults]);
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
   };
 
   // Dynamic color mode values
@@ -76,8 +94,8 @@ const Search = () => {
         <InputGroup mb={6}>
           <Input
             placeholder="Search users or posts..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            value={queryText}
+            onChange={(e) => setQueryText(e.target.value)}
             bg={inputBg}
             color={textColor}
             size="lg"
@@ -105,20 +123,24 @@ const Search = () => {
 
         {/* Suggestions */}
         <HStack spacing={4} mb={6} wrap="wrap">
-          {suggestions.map((suggestion) => (
+          {[
+            "Trending Posts",
+            "Popular Users",
+            "Latest Updates",
+            "Search by Hashtag",
+          ].map((suggestion, index) => (
             <Button
-              key={suggestion.id}
+              key={index}
               bg={suggestionBg}
               color={textColor}
               variant="outline"
               size="sm"
               _hover={{
-                // eslint-disable-next-line react-hooks/rules-of-hooks
                 bg: useColorModeValue("gray.300", "gray.600"),
               }}
-              onClick={() => setQuery(suggestion.text)}
+              onClick={() => setQueryText(suggestion)}
             >
-              {suggestion.text}
+              {suggestion}
             </Button>
           ))}
         </HStack>

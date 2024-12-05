@@ -29,7 +29,7 @@ function App() {
       >
         <Routes>
           {/* Authentication Page */}
-          <Route path="/" element={<AuthPage />} />
+          <Route path="/" element={<SearchPage />} />
           {/* User Post Page */}
           <Route path="/:username/post/:pid" element={<PostPage />} />
           {/* Search Page */}
