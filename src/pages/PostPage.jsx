@@ -13,8 +13,8 @@ import {
   useColorModeValue,
   GridItem,
 } from "@chakra-ui/react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebaseConfig";
+//import { collection, getDocs } from "firebase/firestore";
+//import { db } from "../firebaseConfig";
 import { FaArrowUp, FaArrowDown, FaCommentAlt } from "react-icons/fa";
 
 const PostPage = () => {
@@ -51,19 +51,19 @@ const PostPage = () => {
   ];
 
   // Fetch posts from Firestore
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const querySnapshot = await getDocs(collection(db, "posts"));
-      const postList = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setPosts(postList);
-    };
-
-    fetchPosts();
-  }, []);
-
+  //useEffect(() => {
+  //  const fetchPosts = async () => {
+  //    const querySnapshot = await getDocs(collection(db, "posts"));
+  //    const postList = querySnapshot.docs.map((doc) => ({
+  //      id: doc.id,
+  //      ...doc.data(),
+  //    }));
+  //    setPosts(postList);
+  //  };
+//
+  //  fetchPosts();
+  //}, []);
+//
   // Dynamic color modes
   const bg = useColorModeValue("gray.100", "#101010");
   const textColor = useColorModeValue("gray.800", "whiteAlpha.900");
