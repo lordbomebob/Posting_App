@@ -6,20 +6,51 @@ const CreatePostCard = () =>{
     function handleImageInput(e){
         setInputImageLink(e.target.value)
     }
+    // Validate URL
+    const [error, setError] = useState('');
+    function isValidURL(url) {
+        try {
+            new URL(url); // Throws an error if invalid
+            return true;
+        } catch {
+            return false;
+        }
+    }
     const [imageLinks,setImageLinks]= useState([])
     //add image link to list
     function addImageLink(target){
-        setImageLinks([...imageLinks,{image: target}])
-        //might not work because of delay, might need to use useEffect
-        setPostData({...postData,images:imageLinks})  
+        if (!isValidURL(target)) {
+            setError('Please enter a valid URL.');
+            console.error(error);
+            return;
+        }
+
+        //setImageLinks([...imageLinks,{image: target}])
+        //setPostData({...postData,images:imageLinks})
+        setImageLinks((prevImageLinks) => {
+            const updatedLinks = [...prevImageLinks, { image: target }];
+            setPostData((prevPostData) => ({
+                ...prevPostData,
+                images: updatedLinks,
+            }));
+            return updatedLinks;
+        });
     }
     //subtract image link based on index
     function subImageLink(index){
-        console.log(imageLinks.length)
-        const newImageLinks= imageLinks.filter((_,i)=>i !== index)
-        setImageLinks([...newImageLinks])
-        //might not work becuase of delay
-        setPostData({...postData,images:imageLinks})
+        //console.log(imageLinks.length)
+        //const newImageLinks= imageLinks.filter((_,i)=>i !== index)
+        //setImageLinks([...newImageLinks])
+        ////might not work becuase of delay
+        //setPostData({...postData,images:imageLinks})
+        setImageLinks((prevImageLinks) => {
+            const newImageLinks = prevImageLinks.filter((_, i) => i !== index);
+            setPostData((prevPostData) => ({
+                ...prevPostData,
+                images: newImageLinks,
+            }));
+            return newImageLinks;
+        });
     }
     //function should add to post component
     function showImage(){
@@ -30,11 +61,10 @@ const CreatePostCard = () =>{
         })
         return imageListItem
     }
-
+    //clear input
     function clear(){
         setInputImageLink('')
     }
-
 
     const [postData,setPostData]= useState({
         userID:'not yet added to find user',
@@ -108,5 +138,4 @@ const CreatePostCard = () =>{
         </Flex> 
     )
 }
-
-export default CreatePostCard;
+export default CreatePostCard

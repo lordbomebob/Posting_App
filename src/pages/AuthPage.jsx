@@ -1,12 +1,21 @@
-import { useRecoilValue } from "recoil";
+// src/pages/AuthPage.jsx
+import React, { useState } from "react";
 import LoginCard from "../components/LoginCard";
 import SignupCard from "../components/SignupCard";
-import authScreenAtom from "../atoms/authAtom";
 
-// Authentication Page
+// Authentication and sample content page
 const AuthPage = () => {
-  const authScreenState = useRecoilValue(authScreenAtom);
-  return <>{authScreenState === "login" ? <LoginCard /> : <SignupCard />}</>;
+  const [authScreenState, setAuthScreenState] = useState("login");
+
+  return (
+    <>
+      {authScreenState === "login" ? (
+        <LoginCard setAuthScreenState={setAuthScreenState} />
+      ) : (
+        <SignupCard setAuthScreenState={setAuthScreenState} />
+      )}
+    </>
+  );
 };
 
 export default AuthPage;
