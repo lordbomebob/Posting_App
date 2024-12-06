@@ -47,22 +47,6 @@ const ProfileComponent = ({ name, username, bio, joinDate, followers, following 
         </Text>
       </Box>
 
-      {/* Follow Information*/}
-      <Divider my={4} />
-      <Stack direction="row" justify="center" spacing={8} fontSize="sm">
-        <Text>
-          <Text as="span" fontWeight="bold">
-            {following || 0}
-          </Text>{" "}
-          Following
-        </Text>
-        <Text>
-          <Text as="span" fontWeight="bold">
-            {followers || 0}
-          </Text>{" "}
-          Followers
-        </Text>
-      </Stack>
 
       {/* Edit Profile Button */}
       <Box textAlign="center" mt={4}>
