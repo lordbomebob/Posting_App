@@ -22,7 +22,7 @@ function App() {
         <Route path="/:username" element={<UserPage />} />
         <Route path='/:username/create' element={<CreatePostPage/>} />
           {/* User Post Page */}
-          <Route path="/:username/post/:pid" element={<PostPage />} />
+          <Route path="/home" element={<PostPage />} />
           {/* Search Page */}
           <Route path="/search" element={<SearchPage />} />
           {/* Settings Hub Page */}

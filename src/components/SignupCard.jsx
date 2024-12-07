@@ -19,6 +19,7 @@ import {
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { register } from "../services/authService";
+import { useNavigate } from "react-router-dom";
 
 export default function SignupCard({ setAuthScreenState }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,13 +29,14 @@ export default function SignupCard({ setAuthScreenState }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate()
   const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
     try {
       await register(email, password);
+      navigate("/home")
       alert("Signup successful!");
     } catch (err) {
       setError(err.message || "An error occurred");
