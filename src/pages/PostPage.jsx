@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Flex,
@@ -13,12 +13,10 @@ import {
   useColorModeValue,
   GridItem,
 } from "@chakra-ui/react";
-//import { collection, getDocs } from "firebase/firestore";
-//import { db } from "../firebaseConfig";
+import { Link } from "react-router-dom";
 import { FaArrowUp, FaArrowDown, FaCommentAlt } from "react-icons/fa";
 
 const PostPage = () => {
-  const [posts, setPosts] = useState([]);
   const [profile, setProfile] = useState({
     name: "Ian Bajwa",
     username: "ian.bajwa",
@@ -50,20 +48,6 @@ const PostPage = () => {
     },
   ];
 
-  // Fetch posts from Firestore
-  //useEffect(() => {
-  //  const fetchPosts = async () => {
-  //    const querySnapshot = await getDocs(collection(db, "posts"));
-  //    const postList = querySnapshot.docs.map((doc) => ({
-  //      id: doc.id,
-  //      ...doc.data(),
-  //    }));
-  //    setPosts(postList);
-  //  };
-//
-  //  fetchPosts();
-  //}, []);
-//
   // Dynamic color modes
   const bg = useColorModeValue("gray.100", "#101010");
   const textColor = useColorModeValue("gray.800", "whiteAlpha.900");
@@ -91,35 +75,38 @@ const PostPage = () => {
           left="0"
         >
           <VStack spacing={4} align="stretch">
-            <Button variant="ghost" color={textColor} w="full">
-              Trending
-            </Button>
-            <Button variant="ghost" color={textColor} w="full">
+            <Button
+              as={Link}
+              to="/home"
+              variant="ghost"
+              color={textColor}
+              w="full"
+            >
               Home
             </Button>
-            <Button variant="ghost" color={textColor} w="full">
+            <Button
+              as={Link}
+              to="/search"
+              variant="ghost"
+              color={textColor}
+              w="full"
+            >
               Search
             </Button>
-            <Button variant="ghost" color={textColor} w="full">
+            <Button
+              as={Link}
+              to="/settings"
+              variant="ghost"
+              color={textColor}
+              w="full"
+            >
               Settings
             </Button>
           </VStack>
         </Box>
+
         {/* Three-Column Layout */}
         <Grid templateColumns="1.5fr 2fr 1.5fr" gap={4} ml={6} width="50%">
-          {/* Trending Post Section */}
-          <GridItem
-            colSpan={3}
-            bg={useColorModeValue("white", "gray.700")}
-            borderRadius="md"
-            p={4}
-          >
-            <Heading size="lg" mb={3}>
-              Trending Post
-            </Heading>
-            <Text mb={2}>This is a sample trending post content.</Text>
-          </GridItem>
-
           {/* Your Posts Section */}
           <VStack
             align="stretch"
@@ -139,9 +126,8 @@ const PostPage = () => {
                 bg={useColorModeValue("gray.50", "gray.600")}
                 borderRadius="md"
                 boxShadow="sm"
-                position="relative" // Make parent container relative
+                position="relative"
               >
-                {/* Edit Post Button */}
                 <Button
                   size="sm"
                   colorScheme="green"
@@ -162,8 +148,6 @@ const PostPage = () => {
                 </Text>
                 <Flex mt={1} align="center" justify="space-between">
                   <Stack direction="row" spacing={2} mr={6}>
-                    {" "}
-                    {/* Add a `mr` (marginRight) here */}
                     <Button
                       size="sm"
                       leftIcon={<FaCommentAlt />}
@@ -190,7 +174,7 @@ const PostPage = () => {
                     colorScheme="red"
                   />
                   <Text>{post.downvotes}</Text>
-                </Flex>{" "}
+                </Flex>
               </Box>
             ))}
           </VStack>
@@ -217,7 +201,13 @@ const PostPage = () => {
             <Text fontWeight="bold">{profile.name}</Text>
             <Text>@{profile.username}</Text>
             <Text>{profile.bio}</Text>
-            <Button colorScheme="blue" variant="outline" mt={4}>
+            <Button
+              as={Link}
+              to="/settings/edit-profile"
+              colorScheme="blue"
+              variant="outline"
+              mt={4}
+            >
               Edit Profile
             </Button>
           </VStack>
