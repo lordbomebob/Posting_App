@@ -25,7 +25,7 @@ const Search = () => {
   //    setResults([]);
   //    return;
   //  }
-//
+  //
   //  // Firestore queries for users and posts
   //  const usersQuery = query(
   //    collection(db, "users"),
@@ -37,13 +37,13 @@ const Search = () => {
   //    where("title", ">=", queryText),
   //    where("title", "<=", queryText + "\uf8ff")
   //  );
-//
+  //
   //  try {
   //    const [usersSnapshot, postsSnapshot] = await Promise.all([
   //      getDocs(usersQuery),
   //      getDocs(postsQuery),
   //    ]);
-//
+  //
   //    const userResults = usersSnapshot.docs.map((doc) => ({
   //      id: doc.id,
   //      type: "user",
@@ -54,7 +54,7 @@ const Search = () => {
   //      type: "post",
   //      ...doc.data(),
   //    }));
-//
+  //
   //    setResults([...userResults, ...postResults]);
   //  } catch (error) {
   //    console.error("Error fetching search results:", error);
