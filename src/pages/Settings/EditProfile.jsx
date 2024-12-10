@@ -1,39 +1,47 @@
 // src/pages/Settings/EditProfile.jsx
-import { Box, Heading, VStack, Input, Button } from "@chakra-ui/react";
+import { Flex, Stack, Button } from "@chakra-ui/react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import EditProfileForm from "../../components/EditProfile";
 
 const EditProfile = () => {
   const navigate = useNavigate();
 
+  const [userProfileData, setUserProfileData] = useState({
+    fullName: "",
+    username: "",
+    bio: "",
+    profileImage: "",
+  });
+
+  const handleSubmit = () => {
+    console.log("Updated Profile Data:", userProfileData);
+    navigate("/settings");
+  };
+
   return (
-    <Box
-      p={6}
-      bg="gray.800"
-      color="white"
-      borderRadius="md"
-      maxWidth="600px"
-      mx="auto"
+    <Flex
+      align={"center"}
+      justify={"center"}
+      display={"flex"}
+      flexDirection={"column"}
     >
-      <Heading size="lg" mb={6} textAlign="center">
-        Edit Profile
-      </Heading>
-      <VStack spacing={4}>
-        <Input placeholder="Full Name" bg="gray.700" color="white" />
-        <Input placeholder="Username" bg="gray.700" color="white" />
-        <Input placeholder="Bio" bg="gray.700" color="white" />
-      </VStack>
-      <Button mt={6} colorScheme="blue" width="full">
-        Save Changes
-      </Button>
-      <Button
-        mt={4}
-        colorScheme="red"
-        onClick={() => navigate("/settings")}
-        width="full"
-      >
-        Back to Settings
-      </Button>
-    </Box>
+      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+        <EditProfileForm
+          userProfileData={userProfileData}
+          setUserProfileData={setUserProfileData}
+          handleSubmit={handleSubmit}
+        />
+        <Button
+          mt={4}
+          colorScheme="red"
+          onClick={() => navigate("/settings")}
+          width="full"
+        >
+          Back to Settings
+        </Button>
+      </Stack>
+    </Flex>
   );
 };
 

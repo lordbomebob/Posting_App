@@ -67,7 +67,7 @@ const CreatePostCard = () =>{
     }
 
     const [postData,setPostData]= useState({
-        userID:'not yet added to find user',
+        userID: "userID",// localStorage.user.uid
         title:'',
         content:''    
     })
