@@ -1,5 +1,5 @@
 // src/pages/Settings.jsx
-import { Box, Button, VStack, Heading } from "@chakra-ui/react";
+import { Box, Button, VStack, Heading, Flex } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
@@ -14,6 +14,22 @@ const Settings = () => {
       maxWidth="600px"
       mx="auto"
     >
+
+    <Flex justify="flex-end" mb={4}>
+      <Button
+        size="sm"
+        onClick={() => navigate("/home")}
+        colorScheme="green"
+        bg="limegreen"
+        color="white"
+      _hover={{ bg: "darkgreen" }}
+      variant="outline"
+      >
+        Home
+      </Button>
+    </Flex>
+
+
       <Heading size="lg" mb={6} textAlign="center">
         Settings
       </Heading>
@@ -38,6 +54,14 @@ const Settings = () => {
           width="full"
         >
           Privacy Settings
+        </Button>
+        {/*Return to home */}
+        <Button
+          onClick={() => navigate("/home")}
+          colorScheme="teal"
+          width="full"
+        >
+          Return to Home
         </Button>
       </VStack>
     </Box>

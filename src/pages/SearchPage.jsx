@@ -11,55 +11,58 @@ import {
   HStack,
   Divider,
   useColorModeValue,
+  Flex
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 //import { collection, getDocs, query, where } from "firebase/firestore";
 //import { db } from "../firebaseConfig"; // Firebase Firestore configuration
 
 const Search = () => {
+  const navigate = useNavigate();
   const [queryText, setQueryText] = useState("");
   const [results, setResults] = useState([]);
 
   // Handle search query submission
-  //const handleSearch = async () => {
-  //  if (!queryText.trim()) {
-  //    setResults([]);
-  //    return;
-  //  }
-  //
-  //  // Firestore queries for users and posts
-  //  const usersQuery = query(
-  //    collection(db, "users"),
-  //    where("name", ">=", queryText),
-  //    where("name", "<=", queryText + "\uf8ff")
-  //  );
-  //  const postsQuery = query(
-  //    collection(db, "posts"),
-  //    where("title", ">=", queryText),
-  //    where("title", "<=", queryText + "\uf8ff")
-  //  );
-  //
-  //  try {
-  //    const [usersSnapshot, postsSnapshot] = await Promise.all([
-  //      getDocs(usersQuery),
-  //      getDocs(postsQuery),
-  //    ]);
-  //
-  //    const userResults = usersSnapshot.docs.map((doc) => ({
-  //      id: doc.id,
-  //      type: "user",
-  //      ...doc.data(),
-  //    }));
-  //    const postResults = postsSnapshot.docs.map((doc) => ({
-  //      id: doc.id,
-  //      type: "post",
-  //      ...doc.data(),
-  //    }));
-  //
-  //    setResults([...userResults, ...postResults]);
-  //  } catch (error) {
-  //    console.error("Error fetching search results:", error);
-  //  }
-  //};
+  const handleSearch = async () => {
+    if (!queryText.trim()) {
+      setResults([]);
+     return;
+    }
+
+    // Firestore queries for users and posts
+    const usersQuery = query(
+      collection(db, "users"),
+      where("name", ">=", queryText),
+      where("name", "<=", queryText + "\uf8ff")
+    );
+    const postsQuery = query(
+      collection(db, "posts"),
+      where("title", ">=", queryText),
+      where("title", "<=", queryText + "\uf8ff")
+   );
+  
+    try {
+      const [usersSnapshot, postsSnapshot] = await Promise.all([
+       getDocs(usersQuery),
+       getDocs(postsQuery),
+      ]);
+  
+     const userResults = usersSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        type: "user",
+        ...doc.data(),
+      }));
+     const postResults = postsSnapshot.docs.map((doc) => ({
+       id: doc.id,
+       type: "post",
+        ...doc.data(),
+      }));
+  
+      setResults([...userResults, ...postResults]);
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+   }
+  };
 
   // Dynamic color mode values
   const bg = useColorModeValue("gray.100", "gray.900");
@@ -84,6 +87,21 @@ const Search = () => {
       flexDirection="column"
       justifyContent="space-between"
     >
+
+    <Flex justify="flex-end" mb={4}>
+      <Button
+        size="sm"
+        onClick={() => navigate("/home")}
+        colorScheme="green"
+        bg="limegreen"
+        color="white"
+      _hover={{ bg: "darkgreen" }}
+      variant="outline"
+      >
+        Home
+      </Button>
+    </Flex>
+
       {/* Search Header */}
       <Box>
         <Heading size="lg" mb={6} textAlign="center">
