@@ -13,6 +13,7 @@ import {
   unsavePost,
   upsertPost,
   upsertComment,
+  searchUser,
 } from "../services/firestoreService";
 
 const styles = {
@@ -182,6 +183,16 @@ const FirebaseTester = () => {
             }
           >
             Delete User by ID
+          </button>
+          <button
+            style={styles.button}
+            onClick={() =>
+              handleButtonClick(searchUser, (inputValues) => [
+                inputValues.username,
+              ])
+            }
+          >
+            Search User by Username
           </button>
         </div>
       </div>
