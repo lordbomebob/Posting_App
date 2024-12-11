@@ -9,6 +9,8 @@ import {
   getDocs,
   arrayUnion,
   arrayRemove,
+  query,
+  where,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 
@@ -51,6 +53,47 @@ export const fetchUser = async (userId) => {
     }
   } catch (error) {
     logError(operation, error);
+    throw error;
+  }
+};
+
+// Search for a User by Username
+export const searchUser = async (username) => {
+  const operation = "Search User";
+  try {
+    // Reference to the Users collection
+    const usersCollectionRef = collection(db, "Users");
+
+    // Create a query to find documents where the username field matches the input
+    const userQuery = query(
+      usersCollectionRef,
+      where("username", "==", username)
+    );
+
+    // Execute the query
+    const querySnapshot = await getDocs(userQuery);
+
+    // Check if any results were returned
+    if (!querySnapshot.empty) {
+      // Extract the first matched user
+      const userDoc = querySnapshot.docs[0]; // Assuming usernames are unique
+      const userData = { id: userDoc.id, ...userDoc.data() };
+
+      // Log the successful operation
+      logOperation(operation, { username, userData });
+
+      // Return the user data
+      return userData;
+    } else {
+      // Log the case where no user is found
+      logOperation(operation, { username, message: "No such user!" });
+      return null;
+    }
+  } catch (error) {
+    // Log any errors that occur
+    logError(operation, error);
+
+    // Throw the error to propagate it to the caller
     throw error;
   }
 };
