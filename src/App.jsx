@@ -4,12 +4,13 @@ import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import AuthPage from "./pages/AuthPage";
 import CreatePostPage from "./pages/CreatePostPage";
+import OnBoardPage from "./pages/OnBoardPage";
 import PostPage from "./pages/PostPage";
 import SearchPage from "./pages/SearchPage";
 import Settings from "./pages/Settings";
+import EditProfile from "./pages/Settings/EditProfile"; // Import EditProfile component
 import Privacy from "./pages/Settings/Privacy";
 import Security from "./pages/Settings/Security";
-import EditProfile from "./pages/Settings/EditProfile"; // Import EditProfile component
 import UserPage from "./pages/UserPage";
 
 // Container from chakra-ui wraps our app content in the center
@@ -19,7 +20,9 @@ function App() {
     <Container maxW="620px">
       <Header />
       <Routes>
+        {/*login and signup page */}
         <Route path="/" element={<AuthPage />} />
+        <Route path="/onboard" element={<OnBoardPage/>}/>
         <Route path="/:username" element={<UserPage />} />
         <Route path="/:username/create" element={<CreatePostPage />} />
         {/* User Post Page */}
