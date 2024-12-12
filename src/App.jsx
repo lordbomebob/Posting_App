@@ -1,5 +1,6 @@
 // src/App.jsx
-import { Container } from "@chakra-ui/react";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { Container, IconButton, useColorMode } from "@chakra-ui/react";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import AuthPage from "./pages/AuthPage";
@@ -16,9 +17,19 @@ import UserPage from "./pages/UserPage";
 // Container from chakra-ui wraps our app content in the center
 // Routes for declaring URL routes to post page and profile page
 function App() {
+  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <Container maxW="620px">
       <Header />
+        <IconButton 
+          icon={colorMode === "dark" ?<MoonIcon/>:<SunIcon/>} 
+          onClick={toggleColorMode} 
+          display={'flex'}
+          justifySelf={'right'}
+          position={'fixed'}
+          bottom="20px"
+          right="20px"
+        />
       <Routes>
         {/*login and signup page */}
         <Route path="/" element={<AuthPage />} />
