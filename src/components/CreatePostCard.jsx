@@ -89,6 +89,7 @@ const CreatePostCard = () =>{
     function handleSubmit(){
         //api post
         console.log(postData)
+        //upsertPost(_,postData)
     }
 
     return(
