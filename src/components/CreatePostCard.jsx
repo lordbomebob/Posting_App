@@ -24,14 +24,17 @@ const CreatePostCard = () =>{
             console.error(error);
             return;
         }
-
+        console.log(imageLinks)
         //setImageLinks([...imageLinks,{image: target}])
         //setPostData({...postData,images:imageLinks})
         setImageLinks((prevImageLinks) => {
-            const updatedLinks = [...prevImageLinks, { image: target }];
+            const updatedLinks = [...prevImageLinks,target];
             setPostData((prevPostData) => ({
                 ...prevPostData,
-                images: updatedLinks,
+                content:{
+                    ...prevPostData.content,
+                    imageUrlLinks: updatedLinks,
+                }
             }));
             return updatedLinks;
         });
@@ -47,7 +50,10 @@ const CreatePostCard = () =>{
             const newImageLinks = prevImageLinks.filter((_, i) => i !== index);
             setPostData((prevPostData) => ({
                 ...prevPostData,
-                images: newImageLinks,
+                content:{
+                    ...prevPostData.content,
+                    imageUrlLinks: newImageLinks,
+                }
             }));
             return newImageLinks;
         });
@@ -57,7 +63,7 @@ const CreatePostCard = () =>{
         
         const imageListItem=imageLinks.map((item,index)=>{
 
-            return <ImageListItem key={index}><img src={item.image} onClick={()=>subImageLink(index)}></img></ImageListItem>
+            return <ImageListItem key={index}><img src={item} onClick={()=>subImageLink(index)}></img></ImageListItem>
         })
         return imageListItem
     }
@@ -67,17 +73,23 @@ const CreatePostCard = () =>{
     }
 
     const [postData,setPostData]= useState({
-        userID: "userID",// localStorage.user.uid
+        userId: "userID",// localStorage.user.uid
         title:'',
-        content:''    
+        content:{
+            text:'',
+            imageUrlLinks:[]
+        },
+        timestamp: new Date,
+        likes:[],
+        comments:[]
     })
 
 
     //handle submiting post
     function handleSubmit(){
-        setPostData({...postData,images:imageLinks})
         //api post
         console.log(postData)
+        //upsertPost(_,postData)
     }
 
     return(
@@ -101,7 +113,7 @@ const CreatePostCard = () =>{
                     </FormControl>
                     <FormControl>
                         <FormLabel>Content</FormLabel>
-                        <Textarea placeholder="Content" value={postData.content} onChange={(e)=>setPostData({...postData,content:e.target.value})}></Textarea>
+                        <Textarea placeholder="Content" value={postData.content.text} onChange={(e)=>setPostData({...postData,content:{...postData.content,text:e.target.value}})}></Textarea>
                         
                     </FormControl>
                     <FormControl>
