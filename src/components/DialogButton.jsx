@@ -7,14 +7,13 @@ import {
     useDisclosure
 } from '@chakra-ui/react';
 import React, { useRef } from 'react';
-import CreatePostCard from './CreatePostCard';
-const DialogButton = () => {
+const DialogButton = ({buttonName, insertComponent, buttonTextColor,buttonColorScheme }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef()
   return (
     <>
-      <Button colorScheme='red' onClick={onOpen}>
-        Create Post
+      <Button color={buttonTextColor} colorScheme={buttonColorScheme} onClick={onOpen}>
+        {buttonName}
       </Button>
 
       <AlertDialog
@@ -24,7 +23,7 @@ const DialogButton = () => {
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <CreatePostCard></CreatePostCard>            
+            {insertComponent}
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
