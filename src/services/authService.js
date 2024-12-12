@@ -32,6 +32,16 @@ const addUserToFirestore = async (user) => {
   }
 };
 
+// Helper function to store userId in localStorage
+const storeUserId = (userId) => {
+  localStorage.setItem("userId", userId);
+};
+
+// Helper function to retrieve userId from localStorage
+const getStoredUserId = () => {
+  return localStorage.getItem("userId");
+};
+
 // Sign-up function
 export const register = async (email, password) => {
   const userCredential = await createUserWithEmailAndPassword(
@@ -40,6 +50,7 @@ export const register = async (email, password) => {
     password
   );
   await addUserToFirestore(userCredential.user);
+  storeUserId(userCredential.user.uid); // Store userId in localStorage
   return userCredential.user;
 };
 
@@ -51,10 +62,17 @@ export const login = async (email, password) => {
     password
   );
   await addUserToFirestore(userCredential.user); // Ensure user exists in Firestore on login
+  storeUserId(userCredential.user.uid); // Store userId in localStorage
   return userCredential.user;
+};
+
+// Check if userId exists in localStorage
+export const getCurrentUserId = () => {
+  return getStoredUserId();
 };
 
 // Sign-out function
 export const logout = async () => {
+  localStorage.removeItem("userId"); // Clear userId from localStorage
   return signOut(auth);
 };
