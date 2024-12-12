@@ -2,6 +2,7 @@
     "postId": "string",
     "userId": "string",
     "username":"string",
+    "title":"string",
     "content": {
     "text": "string",
     "imageUrlLinks": ["string"]
