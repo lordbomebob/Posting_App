@@ -1,20 +1,21 @@
-import React, { useState } from "react";
 import {
   Box,
+  Button,
   Flex,
   Grid,
-  VStack,
   Heading,
-  Text,
+  IconButton,
   Image,
   Stack,
-  Button,
-  IconButton,
+  Text,
   useColorModeValue,
-  GridItem,
+  VStack
 } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { FaArrowDown, FaArrowUp, FaCommentAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { FaArrowUp, FaArrowDown, FaCommentAlt } from "react-icons/fa";
+import CreatePostCard from '../components/CreatePostCard';
+import DialogButton from "../components/DialogButton";
 
 const PostPage = () => {
   const [profile, setProfile] = useState({
@@ -116,9 +117,12 @@ const PostPage = () => {
             borderRadius="md"
           >
             <Heading size="md">Your Posts</Heading>
-            <Button colorScheme="blue" variant="solid" mb={4}>
-              Create Post
-            </Button>
+            <DialogButton
+              buttonName={"Create Post"} 
+              insertComponent={<CreatePostCard/>}
+              buttonColorScheme={'blue'}
+            />
+            
             {sampleYourPosts.map((post) => (
               <Box
                 key={post.id}
