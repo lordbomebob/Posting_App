@@ -1,6 +1,14 @@
 {
-    "username":"username",
-    "profilePic":"link to picture",
-    "bio":"lorem",
-    "userUpvote":[]
-}
+    "userId": "string", 
+    "username": "string", 
+    "fullName": "string", 
+    "bio": "string", 
+    "profilePicUrl": "string", 
+    "joiningDate": "timestamp", 
+    "posts": ["string"], 
+    "likedPosts": ["string"], 
+    "savedPosts": ["string"], 
+    "repliedPosts": ["string"], 
+    "reposts": ["string"]
+    }
+    

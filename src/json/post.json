@@ -1,26 +1,24 @@
 {
-    "user":"userid/username",
-    "timestamp":"12:00",
-    "content":{
-        "title":"title",
-        "content":"lorem",
-        "images":["link1", "link2"]
+    "postId": "string",
+    "userId": "string",
+    "username":"string",
+    "content": {
+    "text": "string",
+    "imageUrlLinks": ["string"]
     },
-    "comments":[
-        {
-            "user":{
-                "username":"username1",
-                "profilePic":"link to profile image1"
-            },
-            "comment":"lorem1"
-        },
-        {
-            "user":{
-                "username":"username2",
-                "profilePic":"link to profile image2"
-            },
-            "comment":"lorem2"
-        }
-    ],
-    "likes":0
+    "timestamp": "timestamp",
+    "likes": ["string"],
+    "comments": [
+    {
+    "commentId": "string",
+    "userId": "string",
+    "commenterUsername": "string",
+    "commenterProfilePicUrl": "string",
+    "content": {
+    "text": "string",
+    "imageUrlLinks": ["string"]
+    },
+    "timestamp": "timestamp"
+    }
+]
 }
