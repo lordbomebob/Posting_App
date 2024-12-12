@@ -26,14 +26,14 @@ export default function LoginCard({ setAuthScreenState }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
     try {
       await login(email, password);
-      navigate("/home")
+      navigate("/home");
       alert("Login successful!");
     } catch (err) {
       setError(err.message || "An error occurred");
