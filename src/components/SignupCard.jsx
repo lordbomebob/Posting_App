@@ -1,30 +1,28 @@
 "use client";
 
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
-  Flex,
   Box,
+  Button,
+  Flex,
   FormControl,
   FormLabel,
+  Heading,
   Input,
   InputGroup,
-  HStack,
   InputRightElement,
-  Stack,
-  Button,
-  Heading,
-  Text,
-  useColorModeValue,
   Link,
+  Stack,
+  Text,
+  useColorModeValue
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { register } from "../services/authService";
 import { useNavigate } from "react-router-dom";
+import { register } from "../services/authService";
 
 export default function SignupCard({ setAuthScreenState }) {
   const [showPassword, setShowPassword] = useState(false);
-  const [fullName, setFullName] = useState("");
-  const [userName, setUserName] = useState("");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -60,28 +58,6 @@ export default function SignupCard({ setAuthScreenState }) {
           p={8}
         >
           <Stack spacing={4}>
-            <HStack>
-              <Box>
-                <FormControl isRequired>
-                  <FormLabel>Full Name</FormLabel>
-                  <Input
-                    type="text"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                  />
-                </FormControl>
-              </Box>
-              <Box>
-                <FormControl isRequired>
-                  <FormLabel>User Name</FormLabel>
-                  <Input
-                    type="text"
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
-                  />
-                </FormControl>
-              </Box>
-            </HStack>
             <FormControl isRequired>
               <FormLabel>Email address</FormLabel>
               <Input
