@@ -284,15 +284,35 @@ export const removeComment = async (postId, commentId) => {
 
 // ======== USER-POST INTERACTIONS ========
 
-// Like a Post
 export const likePost = async (postId, userId) => {
   const operation = "Like Post";
   try {
     const postRef = doc(db, "Posts", postId);
+
+    // Fetch the current post data
+    const postSnap = await getDoc(postRef);
+    if (!postSnap.exists()) {
+      throw new Error(`Post with ID ${postId} does not exist.`);
+    }
+
+    const postData = postSnap.data();
+
+    // Check if userId is already in the likes array
+    if (postData.likes?.includes(userId)) {
+      logOperation(operation, {
+        postId,
+        userId,
+        message: "User has already liked this post.",
+      });
+      return; // Exit the function without making any updates
+    }
+
+    // Update the likes array in the post
     await updateDoc(postRef, {
       likes: arrayUnion(userId),
     });
 
+    // Update the likedPosts array in the user document
     const userRef = doc(db, "Users", userId);
     await updateDoc(userRef, {
       likedPosts: arrayUnion(postId),
