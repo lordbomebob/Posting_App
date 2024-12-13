@@ -11,10 +11,12 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
+
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { FaArrowDown, FaArrowUp, FaCommentAlt } from "react-icons/fa";
 import { db } from "../firebaseConfig";
+import { ImageList, ImageListItem } from "@mui/material";
 
 const TrendingPage = () => {
   const [posts, setPosts] = useState([]);
@@ -59,7 +61,24 @@ const TrendingPage = () => {
 
     fetchTrendingPosts();
   }, []); // Ensure this hook always runs without conditions
+  function showImage(images) {
+    return images.map((image, index) => (
 
+        <ImageListItem key={index}>
+
+          <Image
+          src={image}
+          alt={`Post image ${index + 1}`}
+          borderRadius="md"
+          boxShadow="sm"
+          objectFit="cover"
+          width="100%"
+          />
+          
+        </ImageListItem>
+
+    ));
+  }
   return (
     <Flex
       minHeight="100vh"
@@ -94,15 +113,22 @@ const TrendingPage = () => {
                 </Heading>
                 <Text>By {post.userId || "Unknown User"}</Text>
                 <Text mt={2}>{post.content?.text || ""}</Text>
-                {post.content?.imageUrlLinks?.map((url, index) => (
-                  <Image
-                    key={index}
-                    src={url}
-                    alt={`Post image ${index + 1}`}
-                    mt={2}
-                    borderRadius="md"
-                  />
-                ))}
+                
+                  {post.content.imageUrlLinks &&
+                        post.content.imageUrlLinks.length > 0?
+                        <ImageList
+                          sx={{
+                            width: '100%',
+                            maxHeight: 500,         // Set the height limit for scrolling
+                            overflowY: 'auto',      // Enable vertical scrolling
+                            padding: 2,
+                            border: '1px solid #ddd',
+                            borderRadius: 2,
+                            }}>
+                              {showImage(post.content.imageUrlLinks)}
+                        </ImageList>
+                         :<></>}
+                  
                 <Text fontSize="sm" mt={2} color="gray.500">
                   Posted on:{" "}
                   {post.timestamp
@@ -116,6 +142,7 @@ const TrendingPage = () => {
                       leftIcon={<FaCommentAlt />}
                       variant="outline"
                       colorScheme="blue"
+                      onClick={()=> console.log(post.content.imageUrlLinks)}
                     >
                       {post.comments?.length || 0} Comments
                     </Button>
