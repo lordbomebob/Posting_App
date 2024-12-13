@@ -15,6 +15,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUserId } from "../services/authService"; // Importing the token functionality
+import { upsertUser } from "../services/firestoreService";
 
 const OnBoardCard = () => {
   const navigate = useNavigate();
@@ -55,9 +56,9 @@ const OnBoardCard = () => {
     }
     // Here you can add your upsert logic to save or update the user in the database
     console.log("handlesubmit after url check", { userID, userProfile });
-
+    upsertUser(userID, userProfile)
     // Navigate to home after successful profile creation
-    navigate("/home");
+    //navigate("/home");
   };
 
   function isValidURL(url) {
