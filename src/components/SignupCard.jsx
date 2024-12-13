@@ -34,7 +34,7 @@ export default function SignupCard({ setAuthScreenState }) {
     setError("");
     try {
       await register(email, password);
-      navigate("/home")
+      navigate("/onboard")
       alert("Signup successful!");
     } catch (err) {
       setError(err.message || "An error occurred");

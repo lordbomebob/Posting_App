@@ -1,9 +1,10 @@
 // src/components/Header.jsx
-import { Flex, Image, useColorMode } from "@chakra-ui/react";
+import { Flex, Image, useColorModeValue } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 // Header component for logo and theme toggle
 const Header = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const navigate=useNavigate()
 
   return (
     <Flex justifyContent="center" mt={6} mb="12">
@@ -11,8 +12,8 @@ const Header = () => {
         cursor="pointer"
         alt="logo"
         w={["10%", "10%", "5%"]} // Responsive width for mobile, tablet, and desktop
-        src={colorMode === "dark" ? "/light-logo.svg" : "/dark-logo.svg"} // Dynamic logo based on theme
-        onClick={toggleColorMode} // Click to toggle light/dark mode
+        src={useColorModeValue("/dark-logo.svg","/light-logo.svg")} // Dynamic logo based on theme
+        onClick={()=>navigate('/home')} // Click to toggle light/dark mode
       />
     </Flex>
   );

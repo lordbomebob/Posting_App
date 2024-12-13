@@ -1,12 +1,11 @@
 import {
+  createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../firebaseConfig";
-import app from "../firebaseConfig";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import app, { db } from "../firebaseConfig";
 
 const auth = getAuth(app);
 
@@ -76,3 +75,8 @@ export const logout = async () => {
   localStorage.removeItem("userId"); // Clear userId from localStorage
   return signOut(auth);
 };
+
+//return uid
+export const getLocalUid=()=>{
+  return localStorage.current_user?JSON.parse(localStorage.current_user).uid:false
+}

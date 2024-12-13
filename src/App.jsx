@@ -1,19 +1,19 @@
 // src/App.jsx
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Container, IconButton, useColorMode } from "@chakra-ui/react";
-import { Route, Routes, useNavigate, useLocation } from "react-router-dom"; // Import useLocation
 import { useEffect } from "react";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom"; // Import useLocation
 import Header from "./components/Header";
+import SideNavBar from "./components/SideNavBar";
 import AuthPage from "./pages/AuthPage";
-import CreatePostPage from "./pages/CreatePostPage";
 import OnBoardPage from "./pages/OnBoardPage";
 import PostPage from "./pages/PostPage";
+import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 import Settings from "./pages/Settings";
 import EditProfile from "./pages/Settings/EditProfile";
 import Privacy from "./pages/Settings/Privacy";
 import Security from "./pages/Settings/Security";
-import UserPage from "./pages/UserPage";
 import { getCurrentUserId } from "./services/authService";
 
 function App() {
@@ -32,20 +32,23 @@ function App() {
   return (
     <Container maxW="620px">
       <Header />
+      {getCurrentUserId()?<SideNavBar/>:<></>/*if logged in show more ui  */}
       <IconButton
         icon={colorMode === "dark" ? <MoonIcon /> : <SunIcon />}
         onClick={toggleColorMode}
         display={"flex"}
         justifySelf={"right"}
         position={"fixed"}
-        bottom="20px"
-        right="20px"
+        bottom="25px"
+        left="25px"
       />
       <Routes>
         <Route path="/" element={<AuthPage />} />
-        <Route path="/onboard" element={<OnBoardPage />} />
-        <Route path="/:username" element={<UserPage />} />
-        <Route path="/:username/create" element={<CreatePostPage />} />
+        <Route path="/onboard" element={<OnBoardPage/>}/>
+
+        {/*select user */}
+        <Route path="/user/:username" element={<ProfilePage />} />
+        {/* User personal Home Page */}
         <Route path="/home" element={<PostPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/settings" element={<Settings />} />
