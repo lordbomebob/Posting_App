@@ -1,10 +1,11 @@
 import { Box, Button, Flex, FormControl, FormLabel, Heading, HStack, Image, Input, Stack, Textarea, useColorModeValue } from "@chakra-ui/react";
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { getLocalUid } from "../services/authService";
 
 const OnBoardCard = () => {
     const navigate = useNavigate()
-    const [userID,setUserID]= useState("token")//userId: "", // Unique ID for the user (Firestore document ID) probally token from local storage
+    const [userID,setUserID]= useState(getLocalUid())//userId: "", // Unique ID for the user (Firestore document ID) probally token from local storage
     const [userProfile,setUserProfile]= useState({
         username: "", // The username of the user
         fullName: "", // Full name of the user
@@ -25,8 +26,9 @@ const OnBoardCard = () => {
             return
         }
         //upsertUser(userID,userProfile)
-        console.log('handlesubmit after url check')
-        //navigate('/home)
+        console.log('handlesubmit after url check', userProfile)
+        alert("info saved")
+        navigate('/home')
     }
     function isValidURL(url) {
         try {
@@ -67,8 +69,8 @@ const OnBoardCard = () => {
                                 <FormLabel>User Name</FormLabel>
                                 <Input
                                   type="text"
-                                  value={userProfile.userName}
-                                  onChange={(e)=>setUserProfile({...userProfile,userName:e.target.value})}
+                                  value={userProfile.username}
+                                  onChange={(e)=>setUserProfile({...userProfile,username:e.target.value})}
                                 />
                             </FormControl>
                         </Box>
@@ -109,6 +111,7 @@ const OnBoardCard = () => {
                         _hover={{
                         bg: useColorModeValue("gray.700", "gray.800"),
                         }}>Save</Button>
+                    <Button onClick={()=>console.log(userID)}>userid</Button>
                 </Stack>
             </Box>
         </Flex> 
