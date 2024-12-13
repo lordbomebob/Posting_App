@@ -20,7 +20,7 @@ const OnBoardCard = () => {
   const navigate = useNavigate();
 
   // Fetch `userId` (token) from local storage
-  const [userID, setUserID] = useState("token");
+  const [userID, setUserID] = useState(getCurrentUserId());
   const [userProfile, setUserProfile] = useState({
     username: "", // The username of the user
     fullName: "", // Full name of the user
@@ -170,7 +170,7 @@ const OnBoardCard = () => {
           ></Image>
 
           <Button
-            onClick={() => handleSubmit()} //disabled
+            onClick={()=>handleSubmit()}
             loadingText="Submitting"
             size="lg"
             bg={useColorModeValue("gray.600", "gray.700")}
