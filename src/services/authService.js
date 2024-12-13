@@ -1,12 +1,11 @@
 import {
+  createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../firebaseConfig";
-import app from "../firebaseConfig";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import app, { db } from "../firebaseConfig";
 
 const auth = getAuth(app);
 
@@ -56,5 +55,11 @@ export const login = async (email, password) => {
 
 // Sign-out function
 export const logout = async () => {
+  console.log("signout")
   return signOut(auth);
 };
+
+//return uid
+export const getLocalUid=()=>{
+  return localStorage.current_user?JSON.parse(localStorage.current_user).uid:false
+}
