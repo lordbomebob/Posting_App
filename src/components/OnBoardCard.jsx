@@ -41,8 +41,11 @@ const OnBoardCard = ({updateProfile=false}) => {
     if (storedUserId) {
       setUserID(storedUserId);
       if(updateProfile){
+
+        fetchUser(storedUserId).then((data)=>{
+          setUserProfile(data)
+        })
         
-        //setUserProfile()
       }
     } else {
       console.warn("No userId found in local storage");
@@ -60,9 +63,13 @@ const OnBoardCard = ({updateProfile=false}) => {
     }
     // Here you can add your upsert logic to save or update the user in the database
     console.log("handlesubmit after url check", { userID, userProfile });
-    //upsertUser(userID, userProfile)
+    upsertUser(userID, userProfile)
     // Navigate to home after successful profile creation/updating
-    //navigate("/home");
+    if(updateProfile){
+      navigate('/setting')
+    }else{
+      navigate("/home");
+    }
     
   };
 
