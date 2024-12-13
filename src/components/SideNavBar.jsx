@@ -1,6 +1,7 @@
 import { Box, Button, Image, VStack, useColorModeValue } from "@chakra-ui/react";
 import React from 'react';
 import { Link } from "react-router-dom";
+import ConfirmSignOut from "./ConfirmSignOut";
 import DialogButton from "./DialogButton";
 const SideNavBar = () => {
     // Dynamic color modes
@@ -61,7 +62,7 @@ const SideNavBar = () => {
         buttonName={"Log Out"}
         variant={'outline'}
         buttonTextColor={'red'}
-        
+        insertComponent={<ConfirmSignOut/>}
         />
     </VStack>
   </Box>
