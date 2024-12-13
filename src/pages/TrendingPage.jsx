@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
 import {
   Box,
+  Button,
   Flex,
   Grid,
-  VStack,
   Heading,
-  Text,
+  IconButton,
   Image,
   Stack,
-  Button,
-  IconButton,
+  Text,
   useColorModeValue,
+  VStack,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import { FaArrowUp, FaArrowDown, FaCommentAlt } from "react-icons/fa";
-import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { FaArrowDown, FaArrowUp, FaCommentAlt } from "react-icons/fa";
 import { db } from "../firebaseConfig";
 
 const TrendingPage = () => {
@@ -69,52 +68,10 @@ const TrendingPage = () => {
       justifyContent="center"
       p={4}
     >
-      <Flex maxWidth="1200px" width="100%">
-        {/* Sidebar Navigation */}
-        <Box
-          as="nav"
-          width="200px"
-          bg={bg}
-          p={4}
-          boxShadow="md"
-          height="100vh"
-          position="sticky"
-          top="0"
-          left="0"
-        >
-          <VStack spacing={4} align="stretch">
-            <Button
-              as={Link}
-              to="/home"
-              variant="ghost"
-              color={textColor}
-              w="full"
-            >
-              Home
-            </Button>
-            <Button
-              as={Link}
-              to="/search"
-              variant="ghost"
-              color={textColor}
-              w="full"
-            >
-              Search
-            </Button>
-            <Button
-              as={Link}
-              to="/settings"
-              variant="ghost"
-              color={textColor}
-              w="full"
-            >
-              Settings
-            </Button>
-          </VStack>
-        </Box>
+      <Flex justifyItems={'center'} width="100%">
 
         {/* Three-Column Layout */}
-        <Grid templateColumns="1.5fr 2fr 1.5fr" gap={4} ml={6} width="50%">
+        <Grid templateColumns="1fr"width="50vw">
           {/* Trending Posts Section */}
           <VStack
             align="stretch"

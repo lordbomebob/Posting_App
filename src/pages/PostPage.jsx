@@ -66,7 +66,7 @@ const PostPage = () => {
         
 
         {/* Three-Column Layout */}
-        <Grid templateColumns="1.5fr 2fr 1.5fr" gap={4} ml={6} width="50%">
+        <Grid templateColumns="2fr 1.5fr" gap={4} ml={6} >
           {/* Your Posts Section */}
           <VStack
             align="stretch"

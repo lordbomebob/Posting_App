@@ -15,6 +15,7 @@ import Settings from "./pages/Settings";
 import EditProfile from "./pages/Settings/EditProfile";
 import Privacy from "./pages/Settings/Privacy";
 import Security from "./pages/Settings/Security";
+import TrendingPage from "./pages/TrendingPage";
 import { getCurrentUserId } from "./services/authService";
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
         <Route path="/user/:username" element={<ProfilePage />} />
         {/* User personal Home Page */}
         <Route path="/home" element={<PostPage />} />
+        <Route path="/trending" element={<TrendingPage/>} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/settings/security" element={<Security />} />

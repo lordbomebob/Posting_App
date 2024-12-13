@@ -7,7 +7,6 @@ const SideNavBar = () => {
     // Dynamic color modes
   const bg = useColorModeValue("gray.100", "#101010");
   const textColor = useColorModeValue("gray.800", "whiteAlpha.900");
-  const profileBg = useColorModeValue("white", "gray.800");
   return (
     <>
     {/* Sidebar Navigation */}
@@ -39,6 +38,15 @@ const SideNavBar = () => {
         w="full"
       >
         Home
+      </Button>
+      <Button
+        as={Link}
+        to="/trending"
+        variant="ghost"
+        color={textColor}
+        w="full"
+      >
+        Trending
       </Button>
       <Button
         as={Link}
