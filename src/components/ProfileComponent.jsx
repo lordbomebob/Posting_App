@@ -1,9 +1,10 @@
 import React from "react";
-import { Box,Text,Avatar,Stack,Button,Divider } from "@chakra-ui/react";
+import { Box, Text, Avatar, Button } from "@chakra-ui/react";
 
-const ProfileComponent = ({ name, username, bio, joinDate, followers, following }) => {
+const ProfileComponent = ({ fullName, username, bio, joiningDate, followers, following }) => {
   return (
-    <Box maxW="620px"
+    <Box
+      maxW="620px"
       mx="auto"
       mt={6}
       p={4}
@@ -23,7 +24,7 @@ const ProfileComponent = ({ name, username, bio, joinDate, followers, following 
       {/* Profile Picture */}
       <Avatar
         size="xl"
-        name={name || "User"}
+        name={fullName || "User"}
         src=""
         position="relative"
         top="-50px"
@@ -34,7 +35,7 @@ const ProfileComponent = ({ name, username, bio, joinDate, followers, following 
       {/* Profile Details */}
       <Box textAlign="center" mt="-8">
         <Text fontSize="xl" fontWeight="bold">
-          {name || "Example Account"}
+          {fullName || "Example Account"}
         </Text>
         <Text fontSize="sm" color="gray.500">
           @{username || "ExampleUser"}
@@ -43,10 +44,9 @@ const ProfileComponent = ({ name, username, bio, joinDate, followers, following 
           {bio || "This is just a sample profile :)"}
         </Text>
         <Text fontSize="sm" color="gray.500" mt={2}>
-          Joined {joinDate || "October 2020"}
+          Joined {joiningDate || "October 2020"}
         </Text>
       </Box>
-
 
       {/* Edit Profile Button */}
       <Box textAlign="center" mt={4}>
