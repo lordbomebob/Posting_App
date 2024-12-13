@@ -8,14 +8,12 @@ import {
   VStack,
   Heading,
   Text,
-  HStack,
   Divider,
   useColorModeValue,
-  Flex
+  Flex,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-//import { collection, getDocs, query, where } from "firebase/firestore";
-//import { db } from "../firebaseConfig"; // Firebase Firestore configuration
+import { searchUser } from "../services/firestoreService";
 
 const Search = () => {
   const navigate = useNavigate();
@@ -26,49 +24,38 @@ const Search = () => {
   const handleSearch = async () => {
     if (!queryText.trim()) {
       setResults([]);
-     return;
+      return;
     }
 
-    // Firestore queries for users and posts
-    const usersQuery = query(
-      collection(db, "users"),
-      where("name", ">=", queryText),
-      where("name", "<=", queryText + "\uf8ff")
-    );
-    const postsQuery = query(
-      collection(db, "posts"),
-      where("title", ">=", queryText),
-      where("title", "<=", queryText + "\uf8ff")
-   );
-  
     try {
-      const [usersSnapshot, postsSnapshot] = await Promise.all([
-       getDocs(usersQuery),
-       getDocs(postsQuery),
-      ]);
-  
-     const userResults = usersSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        type: "user",
-        ...doc.data(),
-      }));
-     const postResults = postsSnapshot.docs.map((doc) => ({
-       id: doc.id,
-       type: "post",
-        ...doc.data(),
-      }));
-  
-      setResults([...userResults, ...postResults]);
+      // Fetch user(s) based on username matching queryText
+      const userResult = await searchUser(queryText.toLowerCase());
+      const userArray = Array.isArray(userResult)
+        ? userResult
+        : userResult
+        ? [userResult]
+        : [];
+
+      const filteredUsers = userArray.filter((user) =>
+        user.username.toLowerCase().includes(queryText.toLowerCase())
+      );
+
+      setResults(
+        filteredUsers.map((user) => ({
+          id: user.userId,
+          type: "user",
+          ...user,
+        }))
+      );
     } catch (error) {
       console.error("Error fetching search results:", error);
-   }
+    }
   };
 
   // Dynamic color mode values
   const bg = useColorModeValue("gray.100", "gray.900");
   const inputBg = useColorModeValue("white", "gray.700");
   const textColor = useColorModeValue("gray.800", "whiteAlpha.900");
-  const suggestionBg = useColorModeValue("gray.200", "gray.700");
   const resultBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.300", "gray.600");
 
@@ -77,7 +64,7 @@ const Search = () => {
       p={6}
       bg={bg}
       borderWidth="2px"
-      borderColor={borderColor} // Dynamic border color
+      borderColor={borderColor}
       color={textColor}
       borderRadius="md"
       maxWidth="1200px"
@@ -87,31 +74,30 @@ const Search = () => {
       flexDirection="column"
       justifyContent="space-between"
     >
-
-    <Flex justify="flex-end" mb={4}>
-      <Button
-        size="sm"
-        onClick={() => navigate("/home")}
-        colorScheme="green"
-        bg="limegreen"
-        color="white"
-      _hover={{ bg: "darkgreen" }}
-      variant="outline"
-      >
-        Home
-      </Button>
-    </Flex>
+      <Flex justify="flex-end" mb={4}>
+        <Button
+          size="sm"
+          onClick={() => navigate("/home")}
+          colorScheme="green"
+          bg="limegreen"
+          color="white"
+          _hover={{ bg: "darkgreen" }}
+          variant="outline"
+        >
+          Home
+        </Button>
+      </Flex>
 
       {/* Search Header */}
       <Box>
         <Heading size="lg" mb={6} textAlign="center">
-          Search
+          Search Users
         </Heading>
 
         {/* Search Input */}
         <InputGroup mb={6}>
           <Input
-            placeholder="Search users or posts..."
+            placeholder="Search by username..."
             value={queryText}
             onChange={(e) => setQueryText(e.target.value)}
             bg={inputBg}
@@ -138,30 +124,6 @@ const Search = () => {
             </Button>
           </InputRightElement>
         </InputGroup>
-
-        {/* Suggestions */}
-        <HStack spacing={4} mb={6} wrap="wrap">
-          {[
-            "Trending Posts",
-            "Popular Users",
-            "Latest Updates",
-            "Search by Hashtag",
-          ].map((suggestion, index) => (
-            <Button
-              key={index}
-              bg={suggestionBg}
-              color={textColor}
-              variant="outline"
-              size="sm"
-              _hover={{
-                bg: useColorModeValue("gray.300", "gray.600"),
-              }}
-              onClick={() => setQueryText(suggestion)}
-            >
-              {suggestion}
-            </Button>
-          ))}
-        </HStack>
       </Box>
 
       <Divider mb={4} />
@@ -169,38 +131,24 @@ const Search = () => {
       {/* Search Results */}
       <VStack spacing={4} align="stretch" overflowY="auto">
         {results.length > 0 ? (
-          results.map((item) =>
-            item.type === "user" ? (
-              <Box
-                key={item.id}
-                p={4}
-                bg={resultBg}
-                borderRadius="md"
-                borderColor={borderColor} // Border for result box
-                borderWidth="1px"
-                boxShadow="sm"
-              >
-                <Heading size="sm">{item.name}</Heading>
-                <Text>@{item.username}</Text>
-              </Box>
-            ) : (
-              <Box
-                key={item.id}
-                p={4}
-                bg={resultBg}
-                borderRadius="md"
-                borderColor={borderColor} // Border for result box
-                borderWidth="1px"
-                boxShadow="sm"
-              >
-                <Heading size="sm">{item.title}</Heading>
-                <Text>By {item.author}</Text>
-              </Box>
-            )
-          )
+          results.map((item) => (
+            <Box
+              key={item.id}
+              p={4}
+              bg={resultBg}
+              borderRadius="md"
+              borderColor={borderColor}
+              borderWidth="1px"
+              boxShadow="sm"
+            >
+              <Heading size="sm">{item.username}</Heading>
+              <Text>{item.fullName}</Text>
+              <Text>{item.bio}</Text>
+            </Box>
+          ))
         ) : (
           <Text textAlign="center" color="gray.500">
-            No results found. Try a different query.
+            No users found. Try a different query.
           </Text>
         )}
       </VStack>
