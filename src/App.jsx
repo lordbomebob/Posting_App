@@ -3,6 +3,7 @@ import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Container, IconButton, useColorMode } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom"; // Import useLocation
+import FirebaseTester from './components/FirebaseTester';
 import Header from "./components/Header";
 import SideNavBar from "./components/SideNavBar";
 import AuthPage from "./pages/AuthPage";
@@ -55,6 +56,7 @@ function App() {
         <Route path="/settings/security" element={<Security />} />
         <Route path="/settings/privacy" element={<Privacy />} />
         <Route path="/settings/edit-profile" element={<EditProfile />} />
+        <Route path='/test' element={<FirebaseTester/>}/>{/** test only remove later */}
       </Routes>
     </Container>
   );
