@@ -29,7 +29,7 @@ const Search = () => {
 
     try {
       // Fetch user(s) based on username matching queryText
-      const userResult = await searchUser(queryText.toLowerCase());
+      const userResult = await searchUser(queryText);
       const userArray = Array.isArray(userResult)
         ? userResult
         : userResult
