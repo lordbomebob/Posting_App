@@ -7,14 +7,20 @@ import {
     useDisclosure
 } from '@chakra-ui/react';
 import React, { useRef } from 'react';
-const DialogButton = ({buttonName, insertComponent, buttonTextColor,buttonColorScheme }) => {
+const DialogButton = ({buttonName, insertComponent, buttonTextColor,buttonColorScheme, width,variant }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef()
   return (
     <>
-      <Button color={buttonTextColor} colorScheme={buttonColorScheme} onClick={onOpen}>
-        {buttonName}
-      </Button>
+        <Button 
+            color={buttonTextColor} 
+            colorScheme={buttonColorScheme} 
+            onClick={onOpen}
+            w={width}
+            variant={variant}
+        >
+            {buttonName}
+        </Button>
 
       <AlertDialog
         isOpen={isOpen}
