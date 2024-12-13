@@ -6,8 +6,8 @@ import {
     Button,
     useDisclosure
 } from '@chakra-ui/react';
-import React, { useRef } from 'react';
-const DialogButton = ({buttonName, insertComponent, buttonTextColor,buttonColorScheme, width,variant }) => {
+import React, { cloneElement, useRef } from 'react';
+const DialogButton = ({buttonName, buttonTextColor,buttonColorScheme, width,variant, children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef()
   return (
@@ -29,7 +29,7 @@ const DialogButton = ({buttonName, insertComponent, buttonTextColor,buttonColorS
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            {insertComponent}
+            {cloneElement(children,{onClose})}
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>

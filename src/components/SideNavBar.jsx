@@ -58,12 +58,13 @@ const SideNavBar = () => {
       >
         Settings
       </Button>
-      <DialogButton 
+        <DialogButton 
         buttonName={"Log Out"}
         variant={'outline'}
         buttonTextColor={'red'}
-        insertComponent={<ConfirmSignOut/>}
-        />
+        >
+            <ConfirmSignOut/>
+        </DialogButton>
     </VStack>
   </Box>
   </>

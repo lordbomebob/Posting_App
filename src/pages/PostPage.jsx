@@ -78,9 +78,10 @@ const PostPage = () => {
             <Heading size="md">Your Posts</Heading>
             <DialogButton
               buttonName={"Create Post"} 
-              insertComponent={<CreatePostCard/>}
               buttonColorScheme={'blue'}
-            />
+            >
+              <CreatePostCard/>
+            </DialogButton>
             
             {sampleYourPosts.map((post) => (
               <Box
