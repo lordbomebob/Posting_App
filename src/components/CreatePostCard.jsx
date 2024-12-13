@@ -1,7 +1,9 @@
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Stack, Textarea, useColorModeValue } from "@chakra-ui/react";
 import { ImageList, ImageListItem } from "@mui/material";
 import { useState } from "react";
-const CreatePostCard = () =>{
+import { getCurrentUserId } from "../services/authService";
+import { upsertPost } from "../services/firestoreService";
+const CreatePostCard = ({onClose}) =>{
     const [inputImageLink, setInputImageLink]= useState('')
     function handleImageInput(e){
         setInputImageLink(e.target.value)
@@ -24,7 +26,6 @@ const CreatePostCard = () =>{
             console.error(error);
             return;
         }
-        console.log(imageLinks)
         //setImageLinks([...imageLinks,{image: target}])
         //setPostData({...postData,images:imageLinks})
         setImageLinks((prevImageLinks) => {
@@ -73,7 +74,7 @@ const CreatePostCard = () =>{
     }
 
     const [postData,setPostData]= useState({
-        userId: "userID",// localStorage.user.uid
+        userId: getCurrentUserId(),
         title:'',
         content:{
             text:'',
@@ -84,12 +85,14 @@ const CreatePostCard = () =>{
         comments:[]
     })
 
-
+    
     //handle submiting post
     function handleSubmit(){
         //api post
         console.log(postData)
-        //upsertPost(_,postData)
+        upsertPost(null,postData)
+        alert('post Successful')
+        onClose()
     }
 
     return(
