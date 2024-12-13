@@ -16,7 +16,6 @@ import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { FaArrowDown, FaArrowUp, FaCommentAlt } from "react-icons/fa";
 import { db } from "../firebaseConfig";
-import { ImageList, ImageListItem } from "@mui/material";
 import ImageListFormatted from "../components/ImageListFormatted";
 
 const TrendingPage = () => {
@@ -62,7 +61,7 @@ const TrendingPage = () => {
 
     fetchTrendingPosts();
   }, []); // Ensure this hook always runs without conditions
-  
+  const bg2= useColorModeValue("gray.50", "gray.600")
   return (
     <Flex
       minHeight="100vh"
@@ -88,7 +87,7 @@ const TrendingPage = () => {
               <Box
                 key={post.id}
                 p={4}
-                bg={useColorModeValue("gray.50", "gray.600")}
+                bg={bg2}
                 borderRadius="md"
                 boxShadow="sm"
               >
