@@ -3,40 +3,45 @@ import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Container, IconButton, useColorMode } from "@chakra-ui/react";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
+import SideNavBar from "./components/SideNavBar";
 import AuthPage from "./pages/AuthPage";
-import CreatePostPage from "./pages/CreatePostPage";
 import OnBoardPage from "./pages/OnBoardPage";
 import PostPage from "./pages/PostPage";
+import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 import Settings from "./pages/Settings";
 import EditProfile from "./pages/Settings/EditProfile"; // Import EditProfile component
 import Privacy from "./pages/Settings/Privacy";
 import Security from "./pages/Settings/Security";
-import UserPage from "./pages/UserPage";
+import { getLocalUid } from "./services/authService";
 
 // Container from chakra-ui wraps our app content in the center
 // Routes for declaring URL routes to post page and profile page
 function App() {
   const { colorMode, toggleColorMode } = useColorMode();
+
+
   return (
     <Container maxW="620px">
       <Header />
+      {getLocalUid()?<SideNavBar/>:<></>/*if logged in show more ui  */}
         <IconButton 
           icon={colorMode === "dark" ?<MoonIcon/>:<SunIcon/>} 
           onClick={toggleColorMode} 
           display={'flex'}
           justifySelf={'right'}
           position={'fixed'}
-          bottom="20px"
-          right="20px"
+          bottom="25px"
+          left="25px"
         />
       <Routes>
         {/*login and signup page */}
         <Route path="/" element={<AuthPage />} />
         <Route path="/onboard" element={<OnBoardPage/>}/>
-        <Route path="/:username" element={<UserPage />} />
-        <Route path="/:username/create" element={<CreatePostPage />} />
-        {/* User Post Page */}
+
+        {/*select user */}
+        <Route path="/user/:username" element={<ProfilePage />} />
+        {/* User personal Home Page */}
         <Route path="/home" element={<PostPage />} />
         {/* Search Page */}
         <Route path="/search" element={<SearchPage />} />
