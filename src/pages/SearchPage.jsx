@@ -11,8 +11,10 @@ import {
   Divider,
   useColorModeValue,
   Flex,
+  Avatar,
+  Stack,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // Import Link here
 import { searchUser } from "../services/firestoreService";
 
 const Search = () => {
@@ -20,7 +22,6 @@ const Search = () => {
   const [queryText, setQueryText] = useState("");
   const [results, setResults] = useState([]);
 
-  // Handle search query submission
   const handleSearch = async () => {
     if (!queryText.trim()) {
       setResults([]);
@@ -28,8 +29,7 @@ const Search = () => {
     }
 
     try {
-      // Fetch user(s) based on username matching queryText
-      const userResult = await searchUser(queryText);
+      const userResult = await searchUser(queryText.toLowerCase());
       const userArray = Array.isArray(userResult)
         ? userResult
         : userResult
@@ -52,7 +52,6 @@ const Search = () => {
     }
   };
 
-  // Dynamic color mode values
   const bg = useColorModeValue("gray.100", "gray.900");
   const inputBg = useColorModeValue("white", "gray.700");
   const textColor = useColorModeValue("gray.800", "whiteAlpha.900");
@@ -128,22 +127,36 @@ const Search = () => {
 
       <Divider mb={4} />
 
-      {/* Search Results */}
       <VStack spacing={4} align="stretch" overflowY="auto">
         {results.length > 0 ? (
-          results.map((item) => (
+          results.map((user) => (
             <Box
-              key={item.id}
+              as={Link} // Wrap the result in Link
+              to={`/user/${user.username}`} // Redirect to the user profile page
+              key={user.id}
               p={4}
               bg={resultBg}
               borderRadius="md"
               borderColor={borderColor}
               borderWidth="1px"
               boxShadow="sm"
+              _hover={{
+                bg: useColorModeValue("gray.200", "gray.600"),
+                textDecoration: "none",
+              }}
             >
-              <Heading size="sm">{item.username}</Heading>
-              <Text>{item.fullName}</Text>
-              <Text>{item.bio}</Text>
+              <Stack direction="row" align="center" spacing={4}>
+                <Avatar
+                  src={user.ProfilePicURL}
+                  name={user.fullname}
+                  size="md"
+                />
+                <Box>
+                  <Heading size="sm">{user.username}</Heading>
+                  <Text>{user.fullname}</Text>
+                </Box>
+              </Stack>
+              <Text mt={2}>{user.bio}</Text>
             </Box>
           ))
         ) : (
