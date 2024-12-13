@@ -1,9 +1,10 @@
 import { Box, Button, Image, VStack, useColorModeValue } from "@chakra-ui/react";
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ConfirmSignOut from "./ConfirmSignOut";
 import DialogButton from "./DialogButton";
 const SideNavBar = () => {
+  const navigate=useNavigate()
     // Dynamic color modes
   const bg = useColorModeValue("gray.100", "#101010");
   const textColor = useColorModeValue("gray.800", "whiteAlpha.900");
