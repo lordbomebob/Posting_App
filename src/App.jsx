@@ -17,6 +17,7 @@ import Privacy from "./pages/Settings/Privacy";
 import Security from "./pages/Settings/Security";
 import TrendingPage from "./pages/TrendingPage";
 import { getCurrentUserId } from "./services/authService";
+import UpdateProfilePage from "./pages/UpdateProfilePage";
 
 function App() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -57,7 +58,7 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/settings/security" element={<Security />} />
         <Route path="/settings/privacy" element={<Privacy />} />
-        <Route path="/settings/edit-profile" element={<EditProfile />} />
+        <Route path="/settings/edit-profile" element={<UpdateProfilePage />} />
         <Route path='/test' element={<FirebaseTester/>}/>{/** test only remove later */}
       </Routes>
     </Container>

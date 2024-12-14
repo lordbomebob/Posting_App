@@ -15,9 +15,9 @@ import {
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUserId } from "../services/authService"; // Importing the token functionality
-import { upsertUser } from "../services/firestoreService";
+import { fetchUser, upsertUser } from "../services/firestoreService";
 
-const OnBoardCard = () => {
+const OnBoardCard = ({updateProfile=false}) => {
   const navigate = useNavigate();
 
   // Fetch `userId` (token) from local storage
@@ -35,20 +35,27 @@ const OnBoardCard = () => {
     repliedPosts: [], // Array of post IDs where this user commented
     reposts: [], // Array of post IDs that the user reposted
   });
-
   // Fetch the `userId` (token) from local storage on component mount
   useEffect(() => {
     const storedUserId = getCurrentUserId();
     if (storedUserId) {
       setUserID(storedUserId);
+      if(updateProfile){
+
+        fetchUser(storedUserId).then((data)=>{
+          setUserProfile(data)
+        })
+        
+      }
     } else {
       console.warn("No userId found in local storage");
       // Optional: Navigate back to login if no token is found
-      // navigate("/");
+      navigate("/");
     }
   }, []);
 
   const handleSubmit = () => {
+    console.log(userProfile)
     if (!isValidURL(userProfile.profilePicUrl)) {
       console.warn("Invalid URL");
       alert("Invalid profile picture URL");
@@ -57,8 +64,13 @@ const OnBoardCard = () => {
     // Here you can add your upsert logic to save or update the user in the database
     console.log("handlesubmit after url check", { userID, userProfile });
     upsertUser(userID, userProfile)
-    // Navigate to home after successful profile creation
-    //navigate("/home");
+    // Navigate to home after successful profile creation/updating
+    if(updateProfile){
+      navigate('/setting')
+    }else{
+      navigate("/home");
+    }
+    
   };
 
   function isValidURL(url) {
@@ -79,7 +91,7 @@ const OnBoardCard = () => {
     >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Heading fontSize={"4xl"} textAlign={"center"}>
-          Create Profile
+          {updateProfile?"Update Profile":"Create Profile"}
         </Heading>
       </Stack>
       <Box
