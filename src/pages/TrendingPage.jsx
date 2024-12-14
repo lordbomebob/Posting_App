@@ -17,8 +17,10 @@ import React, { useEffect, useState } from "react";
 import { FaArrowDown, FaArrowUp, FaCommentAlt } from "react-icons/fa";
 import { db } from "../firebaseConfig";
 import ImageListFormatted from "../components/ImageListFormatted";
+import { useNavigate } from "react-router-dom";
 
 const TrendingPage = () => {
+  const navigate=useNavigate()
   const [posts, setPosts] = useState([]);
 
   // Always define hooks at the top level in the same order
@@ -94,7 +96,7 @@ const TrendingPage = () => {
                 <Heading size="sm" mb={2}>
                   {post.content?.text || "No Content Available"}
                 </Heading>
-                <Text>By {post.userId || "Unknown User"}</Text>
+                <Text onClick={()=>navigate('/user/'+post.userID)}>By {post.userId || "Unknown User"}</Text>
                 <Text mt={2}>{post.content?.text || ""}</Text>
                 
                   {post.content.imageUrlLinks &&
@@ -127,12 +129,6 @@ const TrendingPage = () => {
                     colorScheme="green"
                   />
                   <Text>{post.likesCount}</Text>
-                  <IconButton
-                    icon={<FaArrowDown />}
-                    aria-label="Downvote"
-                    variant="ghost"
-                    colorScheme="red"
-                  />
                 </Flex>
               </Box>
             ))}

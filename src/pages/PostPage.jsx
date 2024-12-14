@@ -130,7 +130,7 @@ const PostPage = () => {
                       {post.title}
                     </Heading>
                                         
-                    <Text>By {post.userId}</Text>
+                    <Text onClick={()=>navigate('/user/'+post.userID)}>By {post.userId}</Text>
                     {post.content.imageUrlLinks &&
                         post.content.imageUrlLinks.length > 0?
                         <ImageListFormatted listOfImage={post.content.imageUrlLinks}/>
