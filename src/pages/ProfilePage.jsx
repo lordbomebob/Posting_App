@@ -16,7 +16,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        console.log(`Fetching user with username: ${username}`); 
+        console.log(`Fetching user with userId: ${userId}`); 
         const userData = await returnUser(userId); 
         console.log("Firebase returned user data:", userData); 
 
