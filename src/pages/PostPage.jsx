@@ -1,52 +1,54 @@
+import React, { useEffect, useState } from "react";
 import {
   Box,
-  Button,
   Flex,
   Grid,
+  VStack,
   Heading,
-  IconButton,
+  Text,
   Image,
   Stack,
-  Text,
+  Button,
+  IconButton,
   useColorModeValue,
-  VStack
 } from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
-import { FaArrowDown, FaArrowUp, FaCommentAlt } from "react-icons/fa";
+import { FaArrowUp, FaCommentAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import CreatePostCard from '../components/CreatePostCard';
+import CreatePostCard from "../components/CreatePostCard";
 import DialogButton from "../components/DialogButton";
+import ImageListFormatted from "../components/ImageListFormatted";
 import { getCurrentUserId } from "../services/authService";
-import { fetchPostById, fetchUser } from "../services/firestoreService";
+import { fetchPostById, fetchPosts, fetchUser } from "../services/firestoreService";
 
 const PostPage = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
-  const [userPosts, setUserPosts] = useState([]); // Empty array for user posts
+  const [allPosts, setallPosts] = useState([]); // Empty array for user posts
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const loadUserData = async () => {
+    const loadAllData = async () => {
       try {
         const userId = getCurrentUserId();
 
         if (!userId) {
-          console.warn("No user ID found. Redirecting to login.");
-          return navigate("/"); // Redirect only if user is not logged in
+          navigate("/"); // Redirect if no user is logged in
+          return;
         }
 
         // Fetch user profile
         const profileData = await fetchUser(userId);
-        setProfile(profileData || { name: "New User", username: "username" });
-
-        // Fetch posts by user ID
-        const posts = (await fetchPostById(userId)) || [];
-        setUserPosts(posts);
+        setProfile(profileData,  { name: "New User", username: "username" });
+        console.log(fetchPosts().then((result)=>{
+          console.log(result)
+          setallPosts(result)
+        }))
       } catch (error) {
         console.error("Error loading user data:", error);
       }
     };
 
-    loadUserData();
+    loadAllData();
   }, [navigate]);
 
   function showImage(images) {
@@ -64,44 +66,51 @@ const PostPage = () => {
       </Box>
     ));
   }
+
   const bg = useColorModeValue("gray.100", "#101010");
   const textColor = useColorModeValue("gray.800", "whiteAlpha.900");
   const profileBg = useColorModeValue("white", "gray.800");
+  const bg2= useColorModeValue("gray.50", "gray.600")
   return (
     <Flex
       minHeight="100vh"
       bg={bg}
       color={textColor}
       justifyContent="center"
+      alignItems="center"
       p={4}
     >
-      <Flex flexDir={'revert'} maxWidth="1200px" width="100%">
-        
-
-        {/* Three-Column Layout */}
-        <Grid templateColumns="2fr 1.5fr" gap={4} ml={6} >
-          {/* Your Posts Section */}
-          <VStack
-            align="stretch"
-            spacing={4}
-            p={3}
-            bg={useColorModeValue("white", "gray.700")}
-            borderRadius="md"
-          >
-            <Heading size="md">Your Posts</Heading>
-            <DialogButton
-              buttonName={"Create Post"} 
-              buttonColorScheme={'blue'}
+      <Flex
+        maxWidth="1200px"
+        width="100%"
+        justifyContent="center"
+        margin="0 auto"
+      >
+        {/* Main Content */}
+        <Flex
+          flexDirection="column"
+          flexGrow={1}
+          ml={6}
+          justifyContent="center"
+        >
+          <Grid templateColumns="2fr 1.5fr" gap={4} width="100%">
+            {/* Your Posts Section */}
+            <VStack
+              align="stretch"
+              spacing={4}
+              p={3}
+              bg={useColorModeValue("white", "gray.700")}
+              borderRadius="md"
             >
-              <CreatePostCard/>
-            </DialogButton>
-            
-            {userPosts.length > 0 ? (
-                userPosts.map((post) => (
+              <DialogButton buttonName={"Create Post"} buttonColorScheme={'blue'}>
+                <CreatePostCard />
+              </DialogButton>
+              {allPosts.length > 0 ? (
+                allPosts.map((post) => (
                   <Box
                     key={post.id}
                     p={4}
-                    bg={useColorModeValue("gray.50", "gray.600")}
+                    bg={bg2}
                     borderRadius="md"
                     boxShadow="sm"
                     position="relative"
@@ -116,17 +125,19 @@ const PostPage = () => {
                     >
                       Edit Post
                     </Button>
+                    
                     <Heading size="sm" mb={2}>
                       {post.title}
                     </Heading>
-                    <Text>By {post.author}</Text>
-                    {post.images &&
-                      post.images.length > 0 &&
-                      showImage(post.images)}
-                    <Text mt={2}>{post.content}</Text>
-                    <Text fontSize="sm" mt={2} color="gray.500">
-                      Date Added: {post.date}
-                    </Text>
+                                        
+                    <Text>By {post.userId}</Text>
+                    {post.content.imageUrlLinks &&
+                        post.content.imageUrlLinks.length > 0?
+                        <ImageListFormatted listOfImage={post.content.imageUrlLinks}/>
+                         :<></>}
+                         
+                    <Text mt={2}>{post.content.text}</Text>
+
                     <Flex mt={1} align="center" justify="space-between">
                       <Stack direction="row" spacing={2} mr={6}>
                         <Button
@@ -141,13 +152,14 @@ const PostPage = () => {
                           Reply
                         </Button>
                       </Stack>
+                      
                       <IconButton
                         icon={<FaArrowUp />}
                         aria-label="Upvote"
                         variant="ghost"
                         colorScheme="green"
                       />
-                      <Text>{post.upvotes || 0}</Text>
+                      <Text>{post.likes || 0}</Text>
                     </Flex>
                   </Box>
                 ))
@@ -158,8 +170,8 @@ const PostPage = () => {
               )}
             </VStack>
 
-          {/* Your Profile Section */}
-          <VStack
+            {/* Your Profile Section */}
+            <VStack
               align="stretch"
               spacing={4}
               p={9}
@@ -197,8 +209,8 @@ const PostPage = () => {
                 </Text>
               )}
             </VStack>
-          
-        </Grid>
+          </Grid>
+        </Flex>
       </Flex>
     </Flex>
   );
